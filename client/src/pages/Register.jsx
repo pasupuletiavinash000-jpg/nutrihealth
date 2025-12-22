@@ -7,7 +7,7 @@ const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const navigate = useNavigate();
 
-  // --- THEME LOGIC (Dark/Light) ---
+
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
