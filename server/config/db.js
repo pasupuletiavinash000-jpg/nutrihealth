@@ -12,7 +12,6 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// Convert to Promise-based (async/await vadadaniki easy ga untundi)
 const db = pool.promise();
 
 const connectDB = async () => {

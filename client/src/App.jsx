@@ -1,56 +1,37 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast'; // <--- IDI IMPORT CHESAM
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
+// Pages Imports
+import Landing from './pages/Landing';        
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProfileSetup from './pages/ProfileSetup';
 
 function App() {
+  // User login ayyi unnada leda ani check chestundi
+  const isAuth = !!localStorage.getItem('token'); 
+
   return (
     <BrowserRouter>
-      <Toaster 
-        position="top-center"
-        toastOptions={{
-        
-          style: {
-            background: '#1f2937', 
-            color: '#fff',         
-            padding: '16px',
-            borderRadius: '12px',
-            fontSize: '16px',
-            maxWidth: '500px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-          },
-       
-          success: {
-            iconTheme: {
-              primary: '#10B981', 
-              secondary: 'white',
-            },
-            style: {
-              border: '1px solid #10B981',
-            }
-          },
-        
-          error: {
-            iconTheme: {
-              primary: '#EF4444',
-              secondary: 'white',
-            },
-            style: {
-              border: '1px solid #EF4444',
-            }
-          },
-        }}
-      />
+      <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
       
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Landing />} />
+
+        {/* Auth Pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile-setup" element={<ProfileSetup />} />
+        
+        {/* Protected Routes (Login ayithe tappa open avvavu) */}
+        <Route 
+          path="/dashboard" 
+          element={isAuth ? <Dashboard /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/profile-setup" 
+          element={isAuth ? <ProfileSetup /> : <Navigate to="/login" />} 
+        />
       </Routes>
     </BrowserRouter>
   );
